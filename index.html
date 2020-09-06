@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+    #carpet, h1 {
+      text-align: center;
+    }
     .num {
       width: 30px;
+      height: 30px;
       line-height: 30px;
       text-align: center;
       border: 1px solid #ccc;
@@ -15,18 +19,31 @@
       margin: 0;
       box-sizing: border-box;
     }
-
+    #frame {
+      box-sizing: border-box;
+      position: absolute;
+      top: 248px;
+      left: 45%;
+      border: 12px solid red;
+      width: 145px;
+      height: 145px;
+    }
 
   </style>
 </head>
 <body>
   
 <main>
+  <h1>Magic Carpet Visualiser</h1>
 
   <section id="carpet"></section>
+  <div id="frame"></div>
 
 </main>
 
+
+
+<script src="hammer.min.js"></script>
 <script>
 
   const square = [
@@ -35,7 +52,7 @@
     [7,2,16,9],
     [14,11,5,4]
   ]
-
+  // generate carpet
   for ( let r=0; r<16; r++ ) {
     let inner = "";
     for ( let c=0; c<16; c++ ) {
@@ -45,8 +62,51 @@
       <div class="row${r}">${inner}</div>
     `);
   }
+  // handle frame drag
+  const frame = document.getElementById('frame');
+  const mc = new Hammer(frame);
+  mc.get('pan').set({ 
+    direction: Hammer.DIRECTION_ALL, 
+    threshold: 0 
+  });
+  mc.on('pan', handleDrag);
+  let lastPosX = 0;
+  let lastPosY = 0;
+  let isDragging = false;
+  function handleDrag(ev) {
+    let elem = ev.target;
+    if ( ! isDragging ) {
+      isDragging = true;
+      lastPosX = elem.offsetLeft;
+      lastPosY = elem.offsetTop;
+    }
+    let posX = ev.deltaX + lastPosX;
+    let posY = ev.deltaY + lastPosY;
+    elem.style.left = posX + "px";
+    elem.style.top = posY + "px";
+    if (ev.isFinal) {
+      isDragging = false;
+      getSquare(posX,posY);
+    }
+  }
+  // get values from frame
+  function getSquare(posX,posY) {
+    const nums = document.querySelectorAll('.num');
+    let output = [];
+    nums.forEach(n => {
+      let leftInRange = n.offsetLeft >= posX;
+      let rightInRange = n.offsetLeft+30 <= posX+144;
+      let topInRange = n.offsetTop >= posY;
+      let bottomInRange = n.offsetTop+30 <= posY+144;
+      if (leftInRange && rightInRange && topInRange && bottomInRange) {
+        output.push(parseInt(n.innerText));
+      }
+    });
+    console.log(output);
+    return output;
+  }
+
 
 </script>
-
 </body>
 </html>
