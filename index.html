@@ -39,7 +39,16 @@
       height: 90%;
       fill: none;
       stroke: black;
-      stroke-width: 2px;
+      stroke-width: 3px;
+    }
+    [class^=row] {
+      display: inline-flex;
+    }
+
+    #carpet {
+      margin: 0 auto;
+      max-width: 92%;
+      overflow: hidden; 
     }
 
   </style>
@@ -120,7 +129,7 @@
         valuesArray.push(parseInt(n.innerText));
       }
     });
-    // console.log(valuesArray);
+    console.log(valuesArray);
     if(valuesArray.length < 16) {
       frame.style.borderColor = "red";
       // errors.innerText = "Not a suitable selection.";
