@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Magic carpet</title>
   <style>
-    #carpet, h1 {
+    body, #carpet, h1 {
       text-align: center;
     }
     .num {
@@ -22,17 +22,21 @@
     #frame {
       box-sizing: border-box;
       position: absolute;
-      top: 248px;
-      left: 45%;
+      top: calc(50vh - 144px);
+      left: calc(50% - 72px);
       border: 12px solid;
       border-color: #0084ff;
       width: 145px;
       height: 145px;
+      text-align: center;
+      padding-top: 2.5%;
     }
     .modal {
       background: rgba(255,255,255,0.5);
     }
     svg {
+      width: 90%;
+      height: 90%;
       fill: none;
       stroke: black;
       stroke-width: 2px;
@@ -46,7 +50,10 @@
   <h1>Magic Carpet Visualiser</h1>
   <section id="carpet"></section>
   <div id="frame"></div>
-
+  <p>Move the frame around to inspect the carpet for magic squares.</p>
+  <footer>
+    <p><a href="https://fania.eu">Fania Raczinski</a> & <a href="https://daveeveritt.org/art.html">Dave Everitt</a></p>
+  </footer>
 </main>
 
 
@@ -119,7 +126,8 @@
       // errors.innerText = "Not a suitable selection.";
     } else {
       const coordsObject = getCoords(valuesArray);
-      const svgCode = createQuadraticCurveVertices(coordsObject);
+      // const svgCode = createQuadraticCurveVertices(coordsObject);
+      const svgCode = createPolyline(coordsObject);
       frame.innerHTML = svgCode;
       frame.classList.add("modal");
     }
@@ -135,6 +143,17 @@
       offset += 4; // increase offset by one row every 4 columns
     }
     return coordsObject;
+  }
+
+  function createPolyline(coordsObject) {
+    let sizeInc = 100;
+    let w = 4 * sizeInc;
+    let coords = "M";
+    for (let i in coordsObject) {
+      coords += `${coordsObject[i][0] * sizeInc},${coordsObject[i][1] * sizeInc} `;
+    }
+    coords += `${coordsObject[1][0] * sizeInc},${coordsObject[1][1] * sizeInc} `;
+    return `<svg viewBox='${-2} ${-2} ${w-sizeInc+4} ${w-sizeInc+4}'><path d='${coords}'/></svg>`;
   }
 
   function createQuadraticCurveVertices(coordsObject) {
