@@ -100,6 +100,13 @@
     [7,2,16,9],
     [14,11,5,4]
   ]
+
+  const squares = [
+    [[1,8,10,15],[12,13,3,6],[7,2,16,9],[14,11,5,4]],
+    [[9,6,3,16],[,4,15,10,5],[14,1,8,11],[7,12,13,2]],
+    [[9,4,5,16],[6,15,10,3],[12,1,8,13],[7,14,11,2]],
+    [[12,9,6,7],[1,4,15,14],[13,16,3,2],[8,5,10,11]]
+  ]
   // generate 4x4 carpet
   for ( let r=0; r<16; r++ ) {
     let inner = "";
@@ -137,6 +144,8 @@
     elem.style.left = posX + 'px';
     elem.style.top = posY + 'px';
     if (ev.isFinal) {
+      // TODO snap to suitable position here ?
+      // console.log(posX,posY);
       isDragging = false;
       getSquare(posX,posY);
     }
