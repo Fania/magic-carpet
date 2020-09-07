@@ -34,17 +34,20 @@
     .modal {
       background: rgba(255,255,255,0.5);
     }
+    .transparent {
+      stroke: none;
+    }
     svg {
       width: 90%;
       height: 90%;
       fill: none;
       stroke: black;
       stroke-width: 3px;
+      pointer-events: none;
     }
-    [class^=row] {
+    .row {
       display: inline-flex;
     }
-
     #carpet {
       margin: 0 auto;
       max-width: 92%;
@@ -76,18 +79,18 @@
     [7,2,16,9],
     [14,11,5,4]
   ]
-  // generate carpet
+  // generate 4x4 carpet
   for ( let r=0; r<16; r++ ) {
     let inner = "";
     for ( let c=0; c<16; c++ ) {
       inner += `<div class="num">${square[r%4][c%4]}</div>`;
     }
     carpet.insertAdjacentHTML('beforeend',`
-      <div class="row${r}">${inner}</div>
+      <div class="row">${inner}</div>
     `);
   }
-  // handle frame drag
-  const frame = document.getElementById('frame');
+  // handle frame dragging
+  const frame = document.querySelector('#frame');
   const mc = new Hammer(frame);
   mc.get('pan').set({ 
     direction: Hammer.DIRECTION_ALL, 
@@ -98,9 +101,12 @@
   let lastPosY = 0;
   let isDragging = false;
   function handleDrag(ev) {
-    frame.style.borderColor = "#0084ff";
-    frame.innerHTML = "";
-    frame.classList.remove("modal");
+    frame.style.borderColor = '#0084ff';
+    // frame.innerHTML = '';
+    // frame.classList.remove('modal');
+    if (frame.children[0]) {
+      frame.children[0].style.display = 'none';
+    }
     let elem = ev.target;
     if ( ! isDragging ) {
       isDragging = true;
@@ -109,14 +115,15 @@
     }
     let posX = ev.deltaX + lastPosX;
     let posY = ev.deltaY + lastPosY;
-    elem.style.left = posX + "px";
-    elem.style.top = posY + "px";
+    elem.style.left = posX + 'px';
+    elem.style.top = posY + 'px';
     if (ev.isFinal) {
       isDragging = false;
       getSquare(posX,posY);
     }
   }
-  // get numbers from frame
+  // get valuesArray from underneath frame
+  // if suitable selection display magic line
   function getSquare(posX,posY) {
     const nums = document.querySelectorAll('.num');
     let valuesArray = [];
@@ -129,16 +136,16 @@
         valuesArray.push(parseInt(n.innerText));
       }
     });
-    console.log(valuesArray);
     if(valuesArray.length < 16) {
-      frame.style.borderColor = "red";
-      // errors.innerText = "Not a suitable selection.";
+      console.log(valuesArray);
+      frame.style.borderColor = 'red';
     } else {
       const coordsObject = getCoords(valuesArray);
       // const svgCode = createQuadraticCurveVertices(coordsObject);
       const svgCode = createPolyline(coordsObject);
+      frame.innerHTML = '';
       frame.innerHTML = svgCode;
-      frame.classList.add("modal");
+      frame.classList.add('modal');
     }
   }
 
@@ -155,9 +162,9 @@
   }
 
   function createPolyline(coordsObject) {
-    let sizeInc = 100;
-    let w = 4 * sizeInc;
-    let coords = "M";
+    const sizeInc = 100;
+    const w = 4 * sizeInc;
+    let coords = 'M';
     for (let i in coordsObject) {
       coords += `${coordsObject[i][0] * sizeInc},${coordsObject[i][1] * sizeInc} `;
     }
@@ -166,8 +173,8 @@
   }
 
   function createQuadraticCurveVertices(coordsObject) {
-    let sizeInc = 100;
-    let w = 4 * sizeInc;
+    const sizeInc = 100;
+    const w = 4 * sizeInc;
     let fstx = coordsObject[1][0] * sizeInc;
     let fsty = coordsObject[1][1] * sizeInc;
     let sndx = coordsObject[2][0] * sizeInc;
