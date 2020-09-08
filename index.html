@@ -145,7 +145,19 @@
     elem.style.top = posY + 'px';
     if (ev.isFinal) {
       // TODO snap to suitable position here ?
-      // console.log(posX,posY);
+      // console.log('current pos',posX,posY);
+      // // get coords of carpet on current window
+      // const winWidth = window.innerWidth;
+      // const winHeight = window.innerHeight;
+      // // console.log('window w/h',winWidth,winHeight);
+      // const carpetWidth = winWidth > 500 ? 30 * 4 * 4 : 30 * 4 * 2.75;
+      // const leftMargin = (winWidth - carpetWidth) / 2;
+      // const posXWithinCarpet = posX - leftMargin;
+      // // console.log('distance between left of carpet and frame',posXWithinCarpet);
+      // const topMargin = 80;
+      // const posYWithinCarpet = posY - topMargin;
+      // console.log('relative pos',posXWithinCarpet,posYWithinCarpet);
+      // console.log(posXWithinCarpet % 30);
       isDragging = false;
       getSquare(posX,posY);
     }
