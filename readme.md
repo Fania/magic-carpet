@@ -9,7 +9,6 @@ Part of larger body of work on magic squares.
 ## Todos
 
 - [ ] add ability to change carpet
-- [ ] 
 
 <!-- 
 [Math Cats Magic Carpet 1](http://www.mathcats.com/explore/puzzles/magiccarpet1.html)
