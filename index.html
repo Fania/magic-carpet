@@ -74,6 +74,9 @@
       max-width: 900px;
       margin: 0 auto;
     }
+    form {
+      margin-top: 1em;
+    }
 
   </style>
 </head>
@@ -83,6 +86,16 @@
   <h1>Magic Carpet Visualiser</h1>
   <section id="carpet"></section>
   <div id="frame"></div>
+  <form id="squaresForm">
+    <select id="chooseSquare">
+      <option value="squares0" selected>1,8,10,15</option>
+      <option value="squares1">9,6,3,16</option>
+      <option value="squares2">9,4,5,16</option>
+      <option value="squares3">12,9,6,7</option>
+      <option value="squares4">16,3,2,13</option>
+      <option value="squares5">1,8,13,12</option>
+    </select>
+  </form>
   <p>Move the frame around to inspect the carpet for magic squares.</p>
   <footer>
     <p><a href="https://fania.eu">Fania Raczinski</a> & <a href="https://daveeveritt.org/art.html">Dave Everitt</a></p>
@@ -93,6 +106,30 @@
 
 <script src="hammer.min.js"></script>
 <script>
+  chooseSquare.addEventListener("change", changeCarpet);
+  let chosenSquare = 0;
+
+  function changeCarpet() {
+    chosenSquare = 0;
+    const [...rows] = document.querySelectorAll(".row");
+    rows.map(row => row.innerHTML="");
+    console.log(rows);
+
+    console.log(event.target.selectedIndex - 1);
+    chosenSquare = event.target.selectedIndex - 1;
+    console.log(squares[chosenSquare]);
+    
+    for ( let r=0; r<16; r++ ) {
+    let inner = "";
+    for ( let c=0; c<16; c++ ) {
+      // inner += `<div class="num">${square[r%4][c%4]}</div>`;
+      inner += `<div class="num">${squares[chosenSquare][r%4][c%4]}</div>`;
+    }
+    carpet.insertAdjacentHTML('beforeend',`
+      <div class="row">${inner}</div>
+    `);
+  }
+}
 
   const square = [
     [1,8,10,15],
@@ -103,15 +140,18 @@
 
   const squares = [
     [[1,8,10,15],[12,13,3,6],[7,2,16,9],[14,11,5,4]],
-    [[9,6,3,16],[,4,15,10,5],[14,1,8,11],[7,12,13,2]],
+    [[9,6,3,16],[4,15,10,5],[14,1,8,11],[7,12,13,2]],
     [[9,4,5,16],[6,15,10,3],[12,1,8,13],[7,14,11,2]],
-    [[12,9,6,7],[1,4,15,14],[13,16,3,2],[8,5,10,11]]
+    [[12,9,6,7],[1,4,15,14],[13,16,3,2],[8,5,10,11]],
+    [[16,3,2,13],[5,10,11,8],[9,6,7,12],[4,15,14,1]],
+    [[1,8,13,12],[14,11,2,7],[4,5,16,9],[15,10,3,6]]
   ]
   // generate 4x4 carpet
   for ( let r=0; r<16; r++ ) {
     let inner = "";
     for ( let c=0; c<16; c++ ) {
-      inner += `<div class="num">${square[r%4][c%4]}</div>`;
+      // inner += `<div class="num">${square[r%4][c%4]}</div>`;
+      inner += `<div class="num">${squares[chosenSquare][r%4][c%4]}</div>`;
     }
     carpet.insertAdjacentHTML('beforeend',`
       <div class="row">${inner}</div>

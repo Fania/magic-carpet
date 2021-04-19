@@ -16,3 +16,20 @@ Part of larger body of work on magic squares.
 [Math Cats Magic Carpet 3](http://www.mathcats.com/explore/puzzles/magiccarpet3.html)
 [Math Cats Magic Carpet 4](http://www.mathcats.com/explore/puzzles/magiccarpet4.html)
 -->
+
+
+
+Duerer
+
+16 3 2 13
+5 10 11 8
+9 6 7 12
+4 15 14 1
+
+
+Grogono
+
+1 8 13 12
+14 11 2 7
+4 5 16 9
+15 10 3 6
