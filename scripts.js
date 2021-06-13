@@ -18,23 +18,15 @@ const squares = [
 chooseSquare.addEventListener("change", changeCarpet);
 let chosenSquare = 0;  // default carpet/dropdown
 
-function changeCarpet() {
-  chosenSquare = 0;
+function changeCarpet(ev) {
   const [...rows] = document.querySelectorAll(".row");
-  rows.map(row => row.innerHTML="");
-  console.log(rows);
-
-  console.log(event.target);
-  console.log(Event.target.selectedIndex - 1);
-  chosenSquare = Event.target.selectedIndex - 1;
-  console.log(squares[chosenSquare]);
-  
+  rows.map(row => row.remove());
+  chosenSquare = ev.target.selectedIndex;
   createCarpet(chosenSquare);
 }
 
 // generate initial 4x4 carpet
 createCarpet(chosenSquare);
-
 
 
 // generate carpet from a given square (the index for the squares array)
@@ -50,10 +42,6 @@ function createCarpet(chosenSquare) {
     `);
   }
 }
-
-
-
-
 
 
 
