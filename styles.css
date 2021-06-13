@@ -1,0 +1,52 @@
+body, #carpet, h1 {
+  text-align: center;
+}
+.num {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border: 1px solid #ccc;
+  font-size: 1.2em;
+  display: inline-block;
+  margin: 0;
+  box-sizing: border-box;
+}
+#frame {
+  box-sizing: border-box;
+  position: absolute;
+  top: calc(50vh - 144px);
+  left: calc(50% - 72px);
+  border: 12px solid;
+  border-color: #0084ff;
+  width: 145px;
+  height: 145px;
+  text-align: center;
+  padding-top: 12px;
+}
+.modal {
+  background: rgba(255,255,255,0.5);
+}
+svg {
+  width: 90%;
+  height: 90%;
+  fill: none;
+  stroke: black;
+  stroke-width: 3px;
+  pointer-events: none;
+}
+.row {
+  display: inline-flex;
+}
+#carpet {
+  margin: 0 auto;
+  max-width: 92%;
+  overflow: hidden; 
+}
+main {
+  max-width: 900px;
+  margin: 0 auto;
+}
+form {
+  margin-top: 1em;
+}
