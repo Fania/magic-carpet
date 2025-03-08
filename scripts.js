@@ -1,9 +1,9 @@
-const square = [
-  [1,8,10,15],
-  [12,13,3,6],
-  [7,2,16,9],
-  [14,11,5,4]
-]
+// const square = [
+//   [1,8,10,15],
+//   [12,13,3,6],
+//   [7,2,16,9],
+//   [14,11,5,4]
+// ]
 
 const squares = [
   [[1,8,10,15],[12,13,3,6],[7,2,16,9],[14,11,5,4]],
@@ -15,8 +15,9 @@ const squares = [
 ]
 
 
-chooseSquare.addEventListener("change", changeCarpet);
-let chosenSquare = 0;  // default carpet/dropdown
+// chooseSquare.addEventListener("change", changeCarpet);
+// let chosenSquare = 0;  // default carpet/dropdown
+let chosenSquare = Math.floor(Math.random() * 5);;  // random square
 
 function changeCarpet(ev) {
   const [...rows] = document.querySelectorAll(".row");
@@ -31,9 +32,17 @@ createCarpet(chosenSquare);
 
 // generate carpet from a given square (the index for the squares array)
 function createCarpet(chosenSquare) {
-  for ( let r=0; r<16; r++ ) {
+
+  const availWidth = document.documentElement.clientWidth;
+  const availHeight = document.documentElement.clientHeight;
+  // console.log(availWidth,availHeight);
+  const possibleCols = Math.floor(availWidth / 30);
+  const possibleRows = Math.floor(availHeight / 30);
+  // console.log(possibleCols,possibleRows);
+
+  for ( let r=0; r<possibleRows; r++ ) {
     let inner = "";
-    for ( let c=0; c<16; c++ ) {
+    for ( let c=0; c<possibleCols; c++ ) {
       // inner += `<div class="num">${square[r%4][c%4]}</div>`;
       inner += `<div class="num">${squares[chosenSquare][r%4][c%4]}</div>`;
     }
